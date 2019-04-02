@@ -10,3 +10,12 @@
 
 ## programs to test the other programs
 * program to verify we can read disk images
+
+# Commands
+* all commands will run outside the simulator, in the Linux terminal
+
+## cpmcreate
+* initialize disk with all E5's
+
+## cpmcopy
+* cpmcopy <filename> <nameOfDisk>
