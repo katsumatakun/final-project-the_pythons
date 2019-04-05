@@ -1,5 +1,5 @@
 
-typedef struct directly_entry entPtr;
+typedef struct directly_entry* entPtr;
 
 struct directly_entry{
     unsigned char status;
