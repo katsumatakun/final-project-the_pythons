@@ -7,6 +7,7 @@
 #include "node.h"
 #include "insert.h"
 
+/* The purpose of cpmdir is to read all of the directory entries and print them in the alphabetical order */
 
 int main(int argc, char* argv[]) {
 

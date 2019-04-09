@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "cmp_extension.h"
 
+/* The purpose of cpmcreate is to make a file filled with all E5, the size of files are different between floppy and HD, it tke flag taking */
 
 int main(int argc, char* argv[]) {
 
