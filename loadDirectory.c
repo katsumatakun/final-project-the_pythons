@@ -1,10 +1,12 @@
 #include "loadDirectory.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 nodePtr loadDirectory(char* filePath, char opt){
   FILE *fpr;
   if((fpr = fopen(filePath, "rb")) == NULL ) {
     printf("Input file not open\n");
-    return -1;
+    return NULL;
   }
 
   int bootTracks, numEntries, skew, border, current;
@@ -24,9 +26,9 @@ nodePtr loadDirectory(char* filePath, char opt){
       break;
     default:
       printf("usage: program name, disk format, disk name \n");
-      return -1;
+      return NULL;
       }
-      break;
+
 
   current = bootTracks;
   nodePtr head_ptr = NULL;
@@ -35,7 +37,7 @@ nodePtr loadDirectory(char* filePath, char opt){
   q = (entPtr) malloc(sizeof(struct directly_entry));
   if(q == NULL){
     printf("No more memory space available \n");
-    return -1;
+    return NULL;
   }
 
   fseek(fpr, bootTracks, SEEK_SET);
@@ -48,12 +50,12 @@ nodePtr loadDirectory(char* filePath, char opt){
       head_ptr = insertData(head_ptr, q);
       if(head_ptr == NULL){
         printf("No more memory space available \n");
-        return -1;
+        return NULL;
       }
       q = (entPtr) malloc(sizeof(struct directly_entry));
       if(q == NULL){
         printf("No more memory space available \n");
-        return -1;
+        return NULL;
       }
     }
     current = current + 128*skew;

@@ -2,11 +2,11 @@
 
 all: cpmcreate cpmdir
 
-cpmcreate: cpmcreate.o cmp_extension.h
+cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
 
-cpmdir: cpmdir.o cmp_extension.h insert.h loadDirectory.h
-	gcc -o cpmdir cpmdir.o cmp_extension.o insert.o loadDirectory.o
+cpmdir: cpmdir.o cmp_extension.o loadDirectory.o
+	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o
 
 cpmcreate.o: cpmcreate.c cmp_extension.h
 	gcc -c cpmcreate.c

@@ -1,6 +1,8 @@
 #ifndef NODE
 #define NODE
 
+#include "dir_ent.h"
+
 struct node {
   struct node* prev;
   struct node* next;

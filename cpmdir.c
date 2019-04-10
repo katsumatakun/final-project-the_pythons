@@ -5,7 +5,6 @@
 #include "cmp_extension.h"
 #include "dir_ent.h"
 #include "node.h"
-#include "insert.h"
 #include "loadDirectory.h"
 
 /* The purpose of cpmdir is to read all of the directory entries and print them in the alphabetical order */
