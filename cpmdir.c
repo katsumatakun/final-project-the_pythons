@@ -24,12 +24,12 @@ int main(int argc, char* argv[]) {
 
   char opt;
   if((opt = getopt(argc, argv, "FH-:")) == -1){
-    printf("must flag with F or H to indicate floppy or hard disk")
+    printf("must flag with F or H to indicate floppy or hard disk");
     return -1;
   }
 
 
-  nodePtr p = dirIntoMem(argv[2], opt);
+  nodePtr p = loadDirectory(argv[2], opt);
   while(p!=NULL){
     //229==e5
     if(p->ptr->status != 229 && p->ptr->xl == 0) /*if the entry isn't empty*/
