@@ -1,4 +1,5 @@
-
+#ifndef NODE
+#define NODE
 
 struct node {
   struct node* prev;
@@ -6,3 +7,5 @@ struct node {
   struct directly_entry* ptr;
 };
 typedef struct node *nodePtr;
+
+#endif
