@@ -2,7 +2,6 @@
 #include <string.h>
 #include "node.h"
 #include "dir_ent.h"
-#include "insert.h"
 
 /*
   This function will accept the head pointer pointing to

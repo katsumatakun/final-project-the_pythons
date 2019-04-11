@@ -1,1 +1,0 @@
-nodePtr insertData(nodePtr, entPtr);
