@@ -12,11 +12,12 @@
 * program to verify we can read disk images
 
 ## Functions Required by Commands
-#### nodePtr* find(char* fileName, nodePtr head)
+#### nodePtr find(char* fileName, nodePtr head)
 * returns a pointer to the directory entry of the given file if it exists
 * returns a null pointer if the file is not found
 * will be used by cpmcopy and cpmremove
 * requires that loadDirectory has been run
+
 
 # Commands
 * all commands will run outside the simulator, in the Linux terminal
