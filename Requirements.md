@@ -11,6 +11,13 @@
 ## programs to test the other programs
 * program to verify we can read disk images
 
+## Functions Required by Commands
+#### nodePtr* find(char* fileName, nodePtr head)
+* returns a pointer to the directory entry of the given file if it exists
+* returns a null pointer if the file is not found
+* will be used by cpmcopy and cpmremove
+* requires that loadDirectory has been run
+
 # Commands
 * all commands will run outside the simulator, in the Linux terminal
 * all command must have built-in helps, and they should be displayed when just a program name, such that ./<name>, are typed and when errors occur, such that invalid arguments are input.
@@ -20,7 +27,7 @@
 * initialize disk with all E5's (256256 bytes for the floppy disk and 4177920
 bytes for the hard drive)
 * To test if cpmcreate correctly made a new disk/file, put the disk/file in /z80pack-1.36/cpmsim/disks and implement dir and/or sdir
-* the extension should be .dsk  
+* the extension should be .dsk
 * It must take two flags, "-H" and "-F", that represent a hard disk and a floppy disk respectively.
 
 
@@ -37,7 +44,7 @@ bytes for the hard drive)
 * It must output the name with the extension of all the directory entries in the disk image.
 * As well as the name of the directory entries,
 it should display its byte size, the place(?) of record, and the attributes as sdir displays.
-* All the information of each directory entry should be printed one line or with tabs(maybe need discussing)  
+* All the information of each directory entry should be printed one line or with tabs(maybe need discussing)
 
 ## cpmremove
 * It should take two flags, "-H" and "-F", that represent a hard disk and a floppy disk respectively.
