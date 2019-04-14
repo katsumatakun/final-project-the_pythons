@@ -1,3 +1,5 @@
+#ifndef DIR_ENT
+#define DIR_ENT
 
 typedef struct directly_entry* entPtr;
 
@@ -26,3 +28,5 @@ struct directly_entry{
     unsigned int aloc15: 8;
     unsigned int aloc16: 8;
   };
+
+#endif
