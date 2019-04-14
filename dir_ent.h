@@ -1,5 +1,5 @@
-#ifndef DIR_ENT
-#define DIR_ENT
+#ifndef _DIR_ENT_
+#define _DIR_ENT_
 
 typedef struct directly_entry* entPtr;
 

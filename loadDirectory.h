@@ -1,5 +1,5 @@
-#ifndef LOADDIRECTORY
-#define LOADDIRECTORY
+#ifndef _LOADDIRECTORY_
+#define _LOADDIRECTORY_
 
 #include "node.h"
 

@@ -1,5 +1,5 @@
-#ifndef NODE
-#define NODE
+#ifndef _NODE_
+#define _NODE_
 
 #include "dir_ent.h"
 
