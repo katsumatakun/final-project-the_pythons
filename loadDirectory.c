@@ -34,25 +34,27 @@ nodePtr loadDirectory(char* filePath, char opt){
   nodePtr head_ptr = NULL;
 
   entPtr q;
-  q = (entPtr) malloc(sizeof(struct directly_entry));
+  q = (entPtr) malloc(sizeof(struct directory_entry));
   if(q == NULL){
     printf("No more memory space available \n");
     return NULL;
   }
 
   fseek(fpr, bootTracks, SEEK_SET);
-  int entry_size = sizeof(struct directly_entry);
+  int entry_size = sizeof(struct directory_entry);
 
   for(int i=0; i<numEntries/4; i++ ){
 
     for(int x=0; x<4; x++){
       fread(q, entry_size, 1, fpr);
+      if(q->status == 229)
+        continue;
       head_ptr = insertData(head_ptr, q);
       if(head_ptr == NULL){
         printf("No more memory space available \n");
         return NULL;
       }
-      q = (entPtr) malloc(sizeof(struct directly_entry));
+      q = (entPtr) malloc(sizeof(struct directory_entry));
       if(q == NULL){
         printf("No more memory space available \n");
         return NULL;

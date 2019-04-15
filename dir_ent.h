@@ -8,7 +8,7 @@ struct floppy_alloc {
   unsigned short alloc_2:8;
 };
 
-union alloc_block{
+union block_alloc{
   struct floppy_alloc f_alloc;
   unsigned short h_alloc;
 };
