@@ -3,6 +3,16 @@
 
 typedef struct directly_entry* entPtr;
 
+struct floppy_alloc {
+  unsigned short alloc_1:8;
+  unsigned short alloc_2:8;
+};
+
+union alloc{
+  struct floppy_alloc f_alloc;
+  unsigned short h_alloc;
+};
+
 struct directly_entry{
     unsigned char status;
     char name[8];
@@ -11,22 +21,14 @@ struct directly_entry{
     unsigned char bc;
     unsigned char xh;
     unsigned char rc;
-    unsigned int aloc1: 8;
-    unsigned int aloc2: 8;
-    unsigned int aloc3: 8;
-    unsigned int aloc4: 8;
-    unsigned int aloc5: 8;
-    unsigned int aloc6: 8;
-    unsigned int aloc7: 8;
-    unsigned int aloc8: 8;
-    unsigned int aloc9: 8;
-    unsigned int aloc10: 8;
-    unsigned int aloc11: 8;
-    unsigned int aloc12: 8;
-    unsigned int aloc13: 8;
-    unsigned int aloc14: 8;
-    unsigned int aloc15: 8;
-    unsigned int aloc16: 8;
+    union alloc alc1;
+    union alloc alc2;
+    union alloc alc3;
+    union alloc alc4;
+    union alloc alc5;
+    union alloc alc6;
+    union alloc alc7;
+    union alloc alc8;
   };
 
 #endif
