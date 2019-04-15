@@ -3,6 +3,10 @@
 #include "node.h"
 #include "normal_print.h"
 
+/*
+  It will just print the name of directory entries, i.e. "dir"
+*/
+
 void normal_print(nodePtr p){
 
   nodePtr current = p;
