@@ -1,5 +1,5 @@
-#ifndef CMP_EXTENSION
-#define CMP_EXTENSION
+#ifndef _CMP_EXTENSION_
+#define _CMP_EXTENSION_
 
 int contain(char*, char*);
 /* This function checks if a string (*words) ends with a string (*word)
