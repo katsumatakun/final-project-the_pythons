@@ -6,6 +6,7 @@
 #include "dir_ent.h"
 #include "loadDirectory.h"
 #include "normal_print.h"
+#include "formal_print.h"
 
 /* The purpose of cpmdir is to read all of the directory entries and print them in the alphabetical order */
 
@@ -50,6 +51,9 @@ int main(int argc, char* argv[]) {
   nodePtr p = loadDirectory(fname, opt_disk);
   if(!opt_format){
     normal_print(p);
+  }
+  else{
+    formal_print(p, opt_format);
   }
   /*while(p!=NULL){
     //229==e5

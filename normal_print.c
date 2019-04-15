@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "dir_ent.h"
 #include "node.h"
 #include "normal_print.h"
@@ -12,9 +13,12 @@ void normal_print(nodePtr p){
   nodePtr current = p;
   int count=0;
   while(current!=NULL){
-    if(current->ptr->status != 229 && current->ptr->xl == 0) /*if the entry isn't empty*/
+    if(current->ptr->xl == 0) /*if the entry isn't empty*/
       {
-        printf(": %10s ", current->ptr->name);
+        char copy_name[12];
+        strcpy(copy_name, current->ptr->name);
+        copy_name[11];
+        printf(": %10s ", copy_name);
         count++;
         if(count % 4 == 0)
           printf("\n");
