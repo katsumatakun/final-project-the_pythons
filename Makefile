@@ -5,8 +5,8 @@ all: cpmcreate cpmdir
 cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
 
-cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o
-	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o
+cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_print.o
+	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_print.o
 
 cpmcreate.o: cpmcreate.c cmp_extension.h
 	gcc -c cpmcreate.c
@@ -25,6 +25,9 @@ insert.o: insert.c node.h dir_ent.h
 
 normal_print.o: normal_print.c normal_print.h node.h dir_ent.h
 	gcc -c normal_print.c
+
+fnormal_print.o: fnormal_print.c fnormal_print.h node.h dir_ent.h
+	gcc -c formal_print.c
 
 clean:
 	rm -rf *.o cpmcreate cpmdir *.dsk
