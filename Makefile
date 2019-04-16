@@ -26,7 +26,7 @@ cmp_extension.o: cmp_extension.c cmp_extension.h
 insert.o: insert.c node.h dir_ent.h
 	gcc -c insert.c
 
-cpmremove.o: cpmremove.c cmp_extension.h
+cpmremove.o: cpmremove.c cmp_extension.h node.h
 	gcc -c cpmremove.c
 
 clean:
