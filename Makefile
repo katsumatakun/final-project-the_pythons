@@ -1,12 +1,15 @@
 
 
-all: cpmcreate cpmdir
+all: cpmcreate cpmdir cpmremove
 
 cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
 
 cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o
 	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o insert.o
+
+cpmremove: cpmremove.o cmp_extension.o
+	gcc -o cpmremove cpmremove.o cmp_extension.o
 
 cpmcreate.o: cpmcreate.c cmp_extension.h
 	gcc -c cpmcreate.c
@@ -23,5 +26,8 @@ cmp_extension.o: cmp_extension.c cmp_extension.h
 insert.o: insert.c node.h dir_ent.h
 	gcc -c insert.c
 
+cpmremove.o: cpmremove.c cmp_extension.h
+	gcc -c cpmremove.c
+
 clean:
-	rm -rf *.o cpmcreate cpmdir *.dsk
+	rm -rf *.o cpmcreate cpmdir cpmremove *.dsk
