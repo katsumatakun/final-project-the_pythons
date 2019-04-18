@@ -6,7 +6,7 @@
 struct node {
   struct node* prev;
   struct node* next;
-  struct directly_entry* ptr;
+  struct directory_entry* ptr;
 };
 typedef struct node *nodePtr;
 
