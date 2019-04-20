@@ -2,28 +2,42 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "cmp_extension.h"
-#include "node.h"
-
+#include "string.h"
+#include "loadDirectory.h"
+#include "dir_ent.h"
 
 
 int main(int argc, char* argv[]){
 
-    if(argc != 4){
+    if(argc < 4){
       printf("usage: program name, disk format, File to be deleted, disk name \n");
       return -1;
     }
 
-    if(!contain(".dsk", argv[3])){
-      printf("The extension of the file must be .dsk\n");
-      return -1;
-    }
-
     FILE *fptr;
-    if((fptr = fopen(argv[3],"rb+"))==NULL){  //rb+ Allows to read and write but if there is no file it will equal null
+    if((fptr = fopen(argv[2],"rb+"))==NULL){  //rb+ Allows to read and write but if there is no file it will equal null
       printf("File cannot be opened");
       return -1;
     }
+    int total_files = 0;
+    int loop = argc-1;                   //Converts the filename to all uppercase
+    int len = strlen(argv[loop]);
+    while (loop!=2) {
+      for(int i=0;i<len;i++){
+        if(argv[loop][i]<=91){
+          printf("%c \n",argv[loop][i]);
+        }
+        else if(argv[loop][i]!= 46){
+          argv[loop][i]=argv[loop][i]-32;
+          printf("%c \n",argv[loop][i]);
+        }
+      }
+      loop--;
+      int len=strlen(argv[loop]);
+      total_files++;
+    }
+    printf("%s \n", argv[3]);
+
 
     int boot_tracks, num_entries, skew, border, current;
     char opt;
@@ -50,10 +64,50 @@ int main(int argc, char* argv[]){
         return -1;
       }
 
+
       fseek(fptr,boot_tracks,SEEK_SET);
-      for(int i = 0; i<15;i++){
-
+      entPtr q;
+      q = (entPtr) malloc(sizeof(struct directly_entry));
+      int entry_size = sizeof(struct directly_entry);
+      int x=1;
+      while(total_files!=0){
+        while(fread(q, entry_size,1,fptr)){
+        if(q->status == 0){
+          printf("%s \n",q->name);
+        }
       }
+    }
 
+    }
 
-}
+/*
+      nodePtr head_ptr = NULL;
+      entPtr q;
+      q = (entPtr) malloc(sizeof(struct directly_entry));
+      fseek(fptr,boot_tracks,SEEK_SET);
+      int entry_size = sizeof(struct directly_entry);
+
+      for(int x=0; x<4; x++){
+        fread(q, entry_size, 1, fptr);
+        head_ptr = insertData(head_ptr, q);
+        if(head_ptr == NULL){
+          printf("No more memory space available \n");
+          return -1;
+        }
+
+        q = (entPtr) malloc(sizeof(struct directly_entry));
+        if(q == NULL){
+          printf("No more memory space available \n");
+          return -1;
+        }
+      }
+      current = current + 128*skew;
+      if(current>=border){
+        current = current-border+boot_tracks;
+        if(current == boot_tracks){
+          current = current+128;
+        }
+      }
+      printf("%x\n",current );
+      fseek(fptr, current, SEEK_SET);
+    }*/
