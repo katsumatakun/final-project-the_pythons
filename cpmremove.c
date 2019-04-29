@@ -5,14 +5,6 @@
 #include "loadDirectory.h"
 #include "dir_ent.h"
 
-void slice_str(const char * str, char * buffer, size_t start, size_t end)
-{
-    size_t j = 0;
-    for ( size_t i = start; i <= end; ++i ) {
-        buffer[j++] = str[i];
-    }
-    buffer[j] = 0;
-}
 
 int main(int argc, char* argv[]){
 
@@ -30,36 +22,34 @@ int main(int argc, char* argv[]){
     int total_files = 0;
     int loop = argc-1;                   //Converts the filename to all uppercase
     int len = strlen(argv[loop]);
-    int cnt[1];
     int trav_cnt=0;
+    int cnt[1];
 
     while (loop!=2) {
       trav_cnt = 0;
       for(int i=0;i<len;i++){
         if(argv[loop][i]<=91 && argv[loop][i]!=46){
-          printf("%c .\n",argv[loop][i]);
+          //printf("%c .\n",argv[loop][i]);
           trav_cnt++;
         }
         else if (argv[loop][i]==46){
           cnt[1] = trav_cnt-1;
           argv[loop][i]= 32;
-          printf("%c .+\n",argv[loop][i]);
-          ///argv[loop][i]= 32;
+          //printf("%c .+\n",argv[loop][i]);
+
         }
         else if(argv[loop][i]>91) {
           argv[loop][i] =argv[loop][i]-32;
-          printf("%c .\n",argv[loop][i]);
+          //printf("%c .\n",argv[loop][i]);
           trav_cnt++;
         }
       }
-      //argv[loop] = buff;
       loop--;
       total_files++;
     }
     loop = argc-1;
-    //slice_str(argv[loop],argv[loop],0,cnt[loop]);
-    printf("%i \n", cnt[loop-2]);
-    printf("\n%s}\n",argv[3]);
+
+    //printf("\n%s}\n",argv[3]);
 
     int boot_tracks, num_entries, skew, rem_bytes;
     char opt;
@@ -76,6 +66,7 @@ int main(int argc, char* argv[]){
         num_entries = 64;
         rem_bytes = 128 * 26 * 75;
         skew = 6;
+        //border = 9984;
         printf("Floppy \n");
         break;
       case 'H':
@@ -83,6 +74,7 @@ int main(int argc, char* argv[]){
         num_entries = 1024;
         rem_bytes = 128 * 128 * 255;
         skew = 1;
+        //border = 32768;
         break;
       default:
         printf("usage: program name, disk format, disk name \n");
@@ -94,56 +86,39 @@ int main(int argc, char* argv[]){
       entPtr q;
       q = (entPtr) malloc(sizeof(struct directly_entry));
       int entry_size = sizeof(struct directly_entry);
-      int x=120;
+      //printf("%i ::::::\n",entry_size );
 
-      loop = argc-1;
-      int dir_count = 0;
-      nodePtr p = loadDirectory(argv[2],opt);
-      while(p!=NULL){
-        //229==e5
-        //printf("%s   : ", p->ptr->name);
-        //printf("%d \n", p->ptr->status);
-        if(p->ptr->status != 229 && p->ptr->xl == 0){ //if the entry isn't empty
-          if(p->ptr->status == 0){
-            dir_count++;
-          }
-        }
-        p = p->next;
-      }
-      //printf("%i \n", dir_count);
-      //  printf("%s \n", p->ptr->name)
-      dir_count = 0;
       int run_count=0;
-      while(total_files!=0){
-        while(x!=0){
-          fread(q, entry_size,1,fptr);
-          dir_count++;
-          //printf("%s:",q->name);
+      char write[0];
+      write[0]=229;
+      int k = sizeof(write[0]);
+      //printf("%i \n", k);
+      while(fread(q,entry_size,1,fptr)){
+        for(int j=loop;j!=2;j--){
           if(q->status == 0){
-            for(int l=0; l < 3 ;l++){
-              if(q->name[l] == argv[loop][l])
+            for(int l=0; l < 6 ;l++){
+              if(q->name[l] == argv[j][l])
               {
                 run_count++;
-                printf("%li \n",strlen(argv[loop])-5);
               }
-              if(run_count == strlen(argv[loop])-5){
-                printf("%s :",q->name);
-                entry_size = entry_size+(sizeof(struct directly_entry)*run_count);
-                fseek(fptr,entry_size,SEEK_SET);
-                q->status = 255;
-                //fwrite(q,)
+              else{
+                break;
+              }
+              if(run_count == strlen(argv[j])){
+                fseek(fptr,-entry_size,SEEK_CUR);
                 printf("%d \n",q->status);
+                printf("%s :\n",q->name);
+                fwrite(write,1,1,fptr);
+                fseek(fptr,-1,SEEK_CUR);
+                fread(q,entry_size,1,fptr);
+                printf("%d \n",q->status);
+                printf("%s :\n",q->name);
+                run_count = 0;
               }
             }
-            run_count = 0;
-            //printf("%s :",q->name)
           }
-            //printf("%d ,",q->xl);
-            //printf("%d ,",q->bc);
-            //printf("%d \n",q->rc);
-            x--;
-          }
-          total_files--;
         }
-      //printf("%i \n",dir_count);
+      }
+
+      fclose(fptr);
     }
