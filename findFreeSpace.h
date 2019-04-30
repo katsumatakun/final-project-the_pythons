@@ -1,7 +1,8 @@
 #include "node.h"
 
-#define NUM_OF_BLOCKS 27
-/* what is the number of blocks?*/
+#define NUM_OF_BLOCKS (77 * 26 / 8)
+/* 77 * 26 / 8 */
+/* number of tracks * sectors per tract / sectors per block */
 
 union AllocatedBlocks{
   int all;
