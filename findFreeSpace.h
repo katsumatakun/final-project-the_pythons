@@ -1,8 +1,9 @@
 #include "node.h"
 
+/* currently for floppy */
 #define NUM_OF_BLOCKS (77 * 26 / 8)
 /* 77 * 26 / 8 */
-/* number of tracks * sectors per tract / sectors per block */
+/* number of tracks - boot tracks * sectors per tract / sectors per block */
 
 union AllocatedBlocks{
   int all;
