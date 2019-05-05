@@ -36,4 +36,4 @@ fnormal_print.o: fnormal_print.c fnormal_print.h node.h dir_ent.h
 	gcc -c formal_print.c
 
 clean:
-	rm -rf *.o cpmcreate cpmdir cpmremove *.dsk
+	rm -rf *.o cpmcreate cpmdir cpmremove
