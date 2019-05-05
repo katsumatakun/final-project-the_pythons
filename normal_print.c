@@ -17,7 +17,7 @@ void normal_print(nodePtr p){
       {
         char copy_name[12];
         strcpy(copy_name, current->ptr->name);
-        copy_name[11];
+        copy_name[11] = '\0';
         printf(": %10s ", copy_name);
         count++;
         if(count % 4 == 0)
