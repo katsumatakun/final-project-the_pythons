@@ -29,5 +29,11 @@ insert.o: insert.c node.h dir_ent.h
 cpmremove.o: cpmremove.c loadDirectory.h node.h cmp_extension.h
 	gcc -c cpmremove.c
 
+normal_print.o: normal_print.c normal_print.h node.h dir_ent.h
+	gcc -c normal_print.c
+
+fnormal_print.o: fnormal_print.c fnormal_print.h node.h dir_ent.h
+	gcc -c formal_print.c
+
 clean:
 	rm -rf *.o cpmcreate cpmdir cpmremove *.dsk
