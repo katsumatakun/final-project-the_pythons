@@ -3,14 +3,9 @@
 
 typedef struct directory_entry* entPtr;
 
-struct floppy_alloc {
-  unsigned short alloc_1:8;
-  unsigned short alloc_2:8;
-};
-
 union block_alloc{
-  struct floppy_alloc f_alloc;
-  unsigned short h_alloc;
+  unsigned short hard_block[8];
+  unsigned char floppy_block[16];
 };
 
 struct directory_entry{
@@ -21,14 +16,7 @@ struct directory_entry{
     unsigned char bc;
     unsigned char xh;
     unsigned char rc;
-    union block_alloc alc1;
-    union block_alloc alc2;
-    union block_alloc alc3;
-    union block_alloc alc4;
-    union block_alloc alc5;
-    union block_alloc alc6;
-    union block_alloc alc7;
-    union block_alloc alc8;
+    union block_alloc blocks;
   };
 
 #endif
