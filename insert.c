@@ -36,6 +36,11 @@ nodePtr insertData(nodePtr head_ptr, entPtr q){
     behind_node_p = behind_node_p->next;
   }
 
+  while(behind_node_p != NULL && strcmp((behind_node_p->ptr)->name, (new_node_p->ptr)->name)==0 && (behind_node_p->ptr)->xl < (new_node_p->ptr)->xl){
+    front_node_p = behind_node_p;
+    behind_node_p = behind_node_p->next;
+  }
+
  //insert very first of the linked list
  if (front_node_p == NULL){
     new_node_p->prev = NULL;

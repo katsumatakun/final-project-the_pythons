@@ -5,8 +5,8 @@ all: cpmcreate cpmdir cpmremove
 cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
 
-cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o
-	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o insert.o
+cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_print.o
+	gcc -o cpmdir cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_print.o
 
 cpmremove: cpmremove.o cmp_extension.o insert.o loadDirectory.o
 	gcc -o cpmremove cpmremove.o cmp_extension.o insert.o loadDirectory.o
