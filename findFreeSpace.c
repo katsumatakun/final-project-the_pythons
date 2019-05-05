@@ -1,8 +1,8 @@
 #include "findFreeSpace.h"
 
-AllocatedBlocks findFreeSpace(nodePtr head){
-  AllocatedBlocks isFree;
-  isFree.all = 0;
+int* findFreeSpace(nodePtr head){
+  malloc(); //allocate space for the array representing the blocks
+
 
   while(head->next != NULL){
     head->directory_entry->
