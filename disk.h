@@ -7,11 +7,12 @@
 extern int disk_type;
 
 
-int[2] num_of_blocks = {77 * 26 / 8, };
+int num_of_blocks[2] = {77 * 26 / 8, 255 * 128 / 16};
 /* 77 * 26 / 8  for floppy*/
-/* number of tracks - boot tracks * sectors per tract / sectors per block */
+/* 255 * 128 / 16  for hard drive */
+/* number of tracks * sectors per tract / sectors per block */
 
-int[2] blocks_per_dir = {8,16};
+int blocks_per_dir[2] = {8,16};
 
 
 

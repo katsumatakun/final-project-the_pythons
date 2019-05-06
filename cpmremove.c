@@ -92,8 +92,8 @@ int main(int argc, char* argv[]){
 
       fseek(fptr,boot_tracks,SEEK_SET);                                     //set the file to be read from the start of the directory entries
       entPtr q;
-      q = (entPtr) malloc(sizeof(struct directly_entry));
-      int entry_size = sizeof(struct directly_entry);
+      q = (entPtr) malloc(sizeof(struct directory_entry));
+      int entry_size = sizeof(struct directory_entry);
       int run_count=0;
       char write[0];
       write[0]=229;

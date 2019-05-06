@@ -1,6 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h> // for getopt
+#include "disk.h"
 #include "findFreeSpace.h"
 #include "loadDirectory.h"
+#include "cmp_extension.h"
 
 int main(int argc, char* argv[]){
   if (argc != 4 && argc != 3) {
@@ -18,6 +23,7 @@ int main(int argc, char* argv[]){
     return -1;
   }
 
+  char opt;
   while((opt = getopt(argc, argv, "FH-:")) != -1){
     switch(opt){
     case 'F':
@@ -30,6 +36,7 @@ int main(int argc, char* argv[]){
       printf("usage: program name, disk format, print format, disk name \n");
       return -1;
     }
+  }
 
   nodePtr head = loadDirectory(fname, disk_type);
 
@@ -39,5 +46,5 @@ int main(int argc, char* argv[]){
     printf("%d", allocated_blocks[i]);
   }
 
-
+  return 0;
 }
