@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     printf("Output file not open\n");
     return -1;
   }
-  int flag = 0;
+
   int total_bytes, opt; //byte per sec * sec per track * tracks
   while((opt = getopt(argc, argv, "FH-:")) != -1){
     switch(opt){
