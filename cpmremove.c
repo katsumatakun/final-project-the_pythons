@@ -60,17 +60,18 @@ int main(int argc, char* argv[]){
       case 'F':                               //Floppy drive
         boot_tracks = 128 * 26 * 2;
         num_entries = 64;
+        char *fnames[64];                       //holds the the filename to be deleted
         break;
       case 'H':                                 //hard drive
         boot_tracks = 0;
         num_entries = 1024;
+        char *fnames[256];                       //holds the the filename to be deleted
         break;
       default:
         printf("usage: program name, disk format, disk name \n");
         return -1;
       }
 
-      char *fnames[65];                       //holds the the filename to be deleted
       nodePtr p = loadDirectory(argv[2],opt);
       int con = 0;                            //count for number of files to be deleted
       int co;
@@ -92,8 +93,8 @@ int main(int argc, char* argv[]){
 
       fseek(fptr,boot_tracks,SEEK_SET);                                     //set the file to be read from the start of the directory entries
       entPtr q;
-      q = (entPtr) malloc(sizeof(struct directly_entry));
-      int entry_size = sizeof(struct directly_entry);
+      q = (entPtr) malloc(sizeof(struct directory_entry));
+      int entry_size = sizeof(struct directory_entry);
       int run_count=0;
       char write[0];
       write[0]=229;
