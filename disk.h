@@ -4,7 +4,7 @@
 #define FLOPPY 0
 #define HARD 1
 
-extern int disk_type;
+int disk_type;
 
 
 int num_of_blocks[2] = {77 * 26 / 8, 255 * 128 / 16};
