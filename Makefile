@@ -1,6 +1,6 @@
 
 
-all: cpmcreate cpmdir cpmremove
+all: cpmcreate cpmdir cpmremove cpmcopy
 
 cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
@@ -10,6 +10,9 @@ cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_
 
 cpmremove: cpmremove.o cmp_extension.o insert.o loadDirectory.o
 	gcc -o cpmremove cpmremove.o cmp_extension.o insert.o loadDirectory.o
+
+cpmcopy: cpmcopy.o findFreeSpace.o
+	gcc -o cpmcopy.o findFreeSpace.o
 
 cpmcreate.o: cpmcreate.c cmp_extension.h
 	gcc -c cpmcreate.c
