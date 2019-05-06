@@ -23,7 +23,17 @@ int main(int argc, char* argv[]) {
     fname = argv[3];
 
   if(!contain(".dsk", fname) ){
-    printf("The extension of the file must be .dsk\n");
+    printf("The extension of the file must be .dsk, .bin, or .img\n");
+    return -1;
+  }
+
+  if(!contain(".bin", fname) ){
+    printf("The extension of the file must be .dsk, .bin, or .img\n");
+    return -1;
+  }
+
+  if(!contain(".img", fname) ){
+    printf("The extension of the file must be .dsk, .bin, or .img\n");
     return -1;
   }
 
