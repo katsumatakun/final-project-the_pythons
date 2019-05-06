@@ -60,18 +60,18 @@ int main(int argc, char* argv[]){
       case 'F':                               //Floppy drive
         boot_tracks = 128 * 26 * 2;
         num_entries = 64;
-        char *fnames[64];                       //holds the the filename to be deleted
         break;
       case 'H':                                 //hard drive
         boot_tracks = 0;
         num_entries = 1024;
-        char *fnames[256];                       //holds the the filename to be deleted
         break;
       default:
         printf("usage: program name, disk format, disk name \n");
         return -1;
       }
 
+
+      char *finames[256];                       //holds the the filename to be deleted
       nodePtr p = loadDirectory(argv[2],opt);
       int con = 0;                            //count for number of files to be deleted
       int co;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
               co++;
             }
             if(co == 3){
-              fnames[con]= p->ptr->name;
+              finames[con]= p->ptr->name;
               con++;
             }
           }
@@ -131,13 +131,13 @@ int main(int argc, char* argv[]){
             for(int j=con-1;j!=-1;j--){
               a=0;
               run_count = 0;
-              for(int l=0; l < strlen(fnames[j])-1;l++){      //counts for the length of the file to be removed.
-                if(q->name[a] == fnames[j][a]){
+              for(int l=0; l < strlen(finames[j])-1;l++){      //counts for the length of the file to be removed.
+                if(q->name[a] == finames[j][a]){
                   run_count++;
                   a++;
                 }
                 }
-                if(run_count == strlen(fnames[j])-1){
+                if(run_count == strlen(finames[j])-1){
                   fseek(fptr,-entry_size,SEEK_CUR);
                   fwrite(write,1,1,fptr);
                   fseek(fptr,-1,SEEK_CUR);
