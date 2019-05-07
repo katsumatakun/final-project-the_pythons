@@ -12,7 +12,7 @@ cpmremove: cpmremove.o cmp_extension.o insert.o loadDirectory.o
 	gcc -o cpmremove cpmremove.o cmp_extension.o insert.o loadDirectory.o
 
 cpmcopy: cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
-	gcc -o cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
+	gcc -o cpmcopy cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
 
 cpmcreate.o: cpmcreate.c cmp_extension.h
 	gcc -c cpmcreate.c
