@@ -28,6 +28,9 @@ cpmcreate.o: cpmcreate.c cmp_extension.h
 cmpdir.o: cpmdir.c node.h dir_ent.h cmp_extension.h loadDirectory.h
 	gcc -c cpmdir.c
 
+cpmcopy.o: cpmcopy.c findFreeSpace.h loadDirectory.h cmp_extension.h copy_from_disks.h find_loc.h
+	gcc -c cpmcopy.c
+
 loadDirectory.o: loadDirectory.c loadDirectory.h node.h
 	gcc -c loadDirectory.c
 
