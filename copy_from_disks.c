@@ -8,6 +8,36 @@
 #include "dir_ent.h"
 #include "loadDirectory.h"
 
+void conc(char* st1, char* st2, char* new_str){
+  int size1 = strlen(st1);
+  int size2 = strlen(st2);
+
+  int x = 0;
+  int y;
+  for(int i=0; i<size1; i++)
+  {
+    //printf("i = %d\n", i);
+    if(st1[i]==' '){
+      x = i;
+      break;
+    }
+    new_str[i] = st1[i];
+  }
+  //printf("x = %d\n", x);
+  if(x==0)
+    x = size1;
+  new_str[x] = '.';
+  x++;
+
+  for(y=0; y<size2; y++){
+    if(st2[y]==' ')
+      break;
+    new_str[x+y] = st2[y];
+  }
+  new_str[x+y] = '\0';
+  //printf("%s\n", new_str);
+}
+
 void convertToUpperCase(char *sPtr)
 {
   for (int i=0; i< strlen(sPtr); i++)
@@ -19,6 +49,26 @@ void convertToLowerCase(char* st){
   for(int i = 0; i < strlen(st); i++){
   st[i] = tolower(st[i]);
 }
+}
+
+int isMember(nodePtr p, char* filename){
+  nodePtr q = p;
+  char copy_name[9];
+  char copy_extension[4];
+  char current_file_name[12];
+  convertToUpperCase(filename);
+  while(q !=NULL){
+    strcpy(copy_name, q->ptr->name);
+    copy_name[8] = '\0';
+    strcpy(copy_extension, q->ptr->extension);
+    copy_extension[3] = '\0';
+    conc(copy_name, copy_extension, current_file_name);
+    if(!strcmp(filename, current_file_name)){
+      return 1;
+      }
+    q=q->next;
+  }
+  return 0;
 }
 
 //return o if no wildcard return 1 if before, return 2 if after, return 3 if both
@@ -81,35 +131,7 @@ int post(char* st1, char* st2, int num){
   return 1;
 }
 
-void conc(char* st1, char* st2, char* new_str){
-  int size1 = strlen(st1);
-  int size2 = strlen(st2);
 
-  int x = 0;
-  int y;
-  for(int i=0; i<size1; i++)
-  {
-    //printf("i = %d\n", i);
-    if(st1[i]==' '){
-      x = i;
-      break;
-    }
-    new_str[i] = st1[i];
-  }
-  //printf("x = %d\n", x);
-  if(x==0)
-    x = size1;
-  new_str[x] = '.';
-  x++;
-
-  for(y=0; y<size2; y++){
-    if(st2[y]==' ')
-      break;
-    new_str[x+y] = st2[y];
-  }
-  new_str[x+y] = '\0';
-  //printf("%s\n", new_str);
-}
 
 
 
@@ -169,6 +191,7 @@ int main(int argc, char* argv[]) {
   nodePtr p = loadDirectory(dname, opt_disk);
   nodePtr current = p;
 
+
   FILE* fpw;
   char* file_name;
   int file_loc = 3;
@@ -180,10 +203,18 @@ int main(int argc, char* argv[]) {
   while(num_files){
     file_name = argv[file_loc];
     if(wildcards(file_name)==0){
-      if((fpw = fopen(file_name, "wb")) == NULL ) {
-        printf("Output file not open\n");
-        return -1;
-      }
+    if(!isMember(p, file_name)){
+        printf("no file named %s\n", file_name);
+        num_files--;
+        file_loc++;
+        continue;
+    }
+
+        convertToLowerCase(file_name);
+        if((fpw = fopen(file_name, "wb")) == NULL ) {
+          printf("Output file not open\n");
+          return -1;
+        }
       convertToUpperCase(file_name);
     while(current!=NULL){
       strcpy(copy_name, current->ptr->name);
@@ -231,7 +262,6 @@ int main(int argc, char* argv[]) {
   }
   else if(wildcards(file_name)==1){
 
-    printf("working\n");
     char openning[13]="";
     int isOpen = 0;
     while(current!=NULL){
@@ -246,7 +276,6 @@ int main(int argc, char* argv[]) {
       printf("%s\n",current_file_name);
       printf("%d\n", dot);
       if(post(current_file_name, file_name, dot)  == 1){
-        printf("000000000000000000000000\n");
         printf("%d\n", strcmp(openning,current_file_name));
         if(strcmp(openning,current_file_name)){
         if(isOpen){
@@ -419,6 +448,7 @@ int main(int argc, char* argv[]) {
     }
   }
   num_files--;
+  file_loc++;
 }
 return 0;
 }
