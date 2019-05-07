@@ -23,8 +23,7 @@ int main(int argc, char* argv[]){
     return -1;
   }
 
-  char opt;
-  while((opt = getopt(argc, argv, "FH-:")) != -1){
+  char opt = getopt(argc, argv, "FH-:");
     switch(opt){
     case 'F':
       disk_type = FLOPPY;
@@ -36,9 +35,8 @@ int main(int argc, char* argv[]){
       printf("usage: program name, disk format, print format, disk name \n");
       return -1;
     }
-  }
 
-  nodePtr head = loadDirectory(fname, disk_type);
+  nodePtr head = loadDirectory(fname, opt);
 
   int* allocated_blocks = findFreeSpace(head);
 
