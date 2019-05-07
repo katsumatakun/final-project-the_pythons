@@ -5,7 +5,7 @@
 
 
 int* findFreeSpace(nodePtr head){
-  
+
   const int num_of_blocks[2] = {244, 2040};
   /* 77 - 2 * 26 / 8  for floppy*/
   /* 255 * 128 / 16  for hard drive */
@@ -42,5 +42,7 @@ int* findFreeSpace(nodePtr head){
 
     head = head->next;
   }
+
+  return all_blocks;
 
 }
