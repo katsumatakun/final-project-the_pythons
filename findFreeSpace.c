@@ -3,7 +3,18 @@
 #include "disk.h"
 #include "node.h"
 
+
 int* findFreeSpace(nodePtr head){
+  
+  const int num_of_blocks[2] = {244, 2040};
+  /* 77 - 2 * 26 / 8  for floppy*/
+  /* 255 * 128 / 16  for hard drive */
+  /* number of tracks * sectors per tract / sectors per block */
+
+  const int blocks_per_dir[2] = {8,16};
+
+
+
   int* all_blocks = malloc(sizeof(int[num_of_blocks[disk_type]])); //allocate space for the array representing the blocks
   for(int i = 0; i < num_of_blocks[disk_type]; i++){
     /* initialize all blocks to empty */
