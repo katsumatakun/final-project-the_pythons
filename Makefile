@@ -13,8 +13,8 @@ cpmremove: cpmremove.o cmp_extension.o insert.o loadDirectory.o
 	gcc -o cpmremove cpmremove.o cmp_extension.o insert.o loadDirectory.o
 
 
-cpmcopy: cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
-	gcc -o cpmcopy cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
+cpmcopy: cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o copy_from_disks.o find_loc.o
+	gcc -o cpmcopy cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o copy_from_disks.o find_loc.o
 
 copy_from_disks.o: copy_from_disks.c node.h dir_ent.h cmp_extension.h loadDirectory.h find_loc.h
 	gcc -c copy_from_disks.c
@@ -52,4 +52,3 @@ findFreeSpace.o: findFreeSpace.c findFreeSpace.h disk.h node.h
 
 clean:
 	rm -rf *.o cpmcreate cpmdir cpmremove cpmcopy
-

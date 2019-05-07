@@ -140,14 +140,14 @@ int post(char* st1, char* st2, int num){
 
 
 /*This function will copy files input from a disk and put them into the current directory of your PC*/
-int main(int argc, char* argv[]) {
+int copy_from_disks(int argc, char* argv[]) {
 
-  if (argc<4) {
-    printf("usage: program name, disk format, disk name, file name \n");
+  if (argc<5) {
+    printf("usage: program name, disk format, function format, disk name, file name \n");
     return -1;
   }
 
-  int num_files = argc-3;
+  int num_files = argc-4;
   char* dname = argv[2];
 
   if(!contain(".dsk", dname) ){
@@ -181,13 +181,15 @@ int main(int argc, char* argv[]) {
       num_128_per_block = 16;
       num_alloc_per_ent = 8;
       break;
+    case 'd':
+      break;
     default:
-      printf("usage: program name, disk format, disk name, file name \n");
+      printf("usage: program name, disk format, function format, disk name, file name \n");
       return -1;
     }
   }
   if(opt_disk==' '){
-    printf("usage: program name, disk format, disk name, file name \n");
+    printf("usage: program name, disk format, function format, disk name, file name \n");
     return -1;
   }
 
