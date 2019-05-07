@@ -1,6 +1,7 @@
 
 
-all: cpmcreate cpmdir cpmremove mycopy
+
+all: cpmcreate cpmdir cpmremove cpmcopy
 
 cpmcreate: cpmcreate.o cmp_extension.o
 	gcc -o cpmcreate cpmcreate.o cmp_extension.o
@@ -11,8 +12,9 @@ cpmdir: cpmdir.o cmp_extension.o loadDirectory.o insert.o normal_print.o formal_
 cpmremove: cpmremove.o cmp_extension.o insert.o loadDirectory.o
 	gcc -o cpmremove cpmremove.o cmp_extension.o insert.o loadDirectory.o
 
-mycopy: copy_from_disks.o cmp_extension.o insert.o loadDirectory.o find_loc.o
-	gcc -o mycopy copy_from_disks.o cmp_extension.o insert.o loadDirectory.o find_loc.o
+
+cpmcopy: cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
+	gcc -o cpmcopy cpmcopy.o findFreeSpace.o loadDirectory.o insert.o cmp_extension.o
 
 copy_from_disks.o: copy_from_disks.c node.h dir_ent.h cmp_extension.h loadDirectory.h find_loc.h
 	gcc -c copy_from_disks.c
@@ -45,6 +47,9 @@ fnormal_print.o: fnormal_print.c fnormal_print.h node.h dir_ent.h
 	gcc -c formal_print.c
 
 
+findFreeSpace.o: findFreeSpace.c findFreeSpace.h disk.h node.h
+	gcc -c findFreeSpace.c
 
 clean:
-	rm -rf *.o mycopy cpmcreate cpmdir cpmremove *.dsk
+	rm -rf *.o cpmcreate cpmdir cpmremove cpmcopy
+

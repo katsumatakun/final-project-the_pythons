@@ -10,6 +10,7 @@ struct node {
 };
 typedef struct node *nodePtr;
 
+
 /* node function headers */
 
 nodePtr insertData(nodePtr, entPtr);
@@ -23,4 +24,8 @@ nodePtr insertData(nodePtr, entPtr);
   Finally return the pointer to the new head node after sorting.
 */
 
+#endif
+
+#ifndef NULL
+#define NULL 0 /* makes checking for null pointers clearer */
 #endif
