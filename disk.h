@@ -6,4 +6,9 @@
 
 int disk_type;
 
+
+
+
+
+
 #endif
