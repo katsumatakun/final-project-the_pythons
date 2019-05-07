@@ -8,65 +8,27 @@
 #include "dir_ent.h"
 #include "loadDirectory.h"
 
-struct node_files {
-  struct node_files* pre;
-  struct node_files* nxt;
-  char* pt;
-};
+void convertToUpperCase(char *sPtr)
+{
+  for (int i=0; i< strlen(sPtr); i++)
+  sPtr[i] = toupper(sPtr[i]);
 
-typedef struct node_files *filePtr;
-
-filePtr insert(char* file_name, filePtr head_ptr){
-
-  filePtr new_node_p;
-  filePtr front_node_p;
-  filePtr behind_node_p;
-  filePtr new_Head_p = head_ptr;
-
-  //allocation failure will finish function execution with null return
-  new_node_p = (nodePtr) malloc(sizeof(struct node_files));
-  new_node_p->pt = file_name
-  behind_node_p = head_ptr;
-  front_node_p = NULL;
-
-  //Finding insertion point
-  while(behind_node_p != NULL && strcmp((behind_node_p->pt), (new_node_p->pt<0))){
-    front_node_p = behind_node_p;
-    behind_node_p = behind_node_p->nxt;
-  }
-
- //insert very first of the linked list
- if (front_node_p == NULL){
-    new_node_p->prev = NULL;
-    new_node_p->next  = behind_node_p;
-    new_Head_p = new_node_p;
-    if(behind_node_p != NULL){
-      behind_node_p -> prev = new_node_p;
-    }
-  }
-
-  //insert between node pointed to by front_node_p and one pointed to by behind_node_p
-  //(or very end if behind_node_p == NULL)
-  else{
-    front_node_p->next = new_node_p;
-    new_node_p->prev = front_node_p;
-    new_node_p->next = behind_node_p;
-    if(behind_node_p != NULL){
-      behind_node_p->prev = new_node_p;
-    }
-    return new_Head_p;
 }
 
-
+void convertToLowerCase(char* st){
+  for(int i = 0; i < strlen(st); i++){
+  st[i] = tolower(st[i]);
+}
 }
 
 //return o if no wildcard return 1 if before, return 2 if after, return 3 if both
 int wildcards(char* fname){
   int dot=0;
-  int before=0
+  int before=0;
   int after = 0;
-
+  //printf("%s\n",fname);
   for(int x=0; x<strlen(fname); x++){
+    //printf("%u\n",fname[x]== '*');
     if(fname[x] == '*'){
       if(dot==0)
         before = 1;
@@ -78,13 +40,14 @@ int wildcards(char* fname){
     }
   }
 
-    return before+after;
+  //printf("%d\n", before+after);
+  return (before+after);
 
 }
 
 int find(char* st, char c){
   for(int i=0; i<strlen(st); i++){
-    if(char[i] == c){
+    if(st[i] == c){
       return i;
     }
   }
@@ -94,6 +57,8 @@ int find(char* st, char c){
 int pre(char* st1, char* st2, int num){
   convertToUpperCase(st1);
   convertToUpperCase(st2);
+  printf("%s\n",st1 );
+  printf("%s\n",st2 );
   for(int i=0; i<num; i++){
     if(st1[i]!=st2[i])
       return 0;
@@ -102,12 +67,16 @@ int pre(char* st1, char* st2, int num){
 }
 
 int post(char* st1, char* st2, int num){
+  int z = 1;
   convertToUpperCase(st1);
   convertToUpperCase(st2);
   int len = strlen(st1);
-  for(int i=st1-len; i<len; i++){
-    if(st1[i]!=st2[i])
+  for(int i=len-num; i<len; i++){
+    printf("%c\n",st1[i] );
+    printf("%c\n",st2[z] );
+    if(st1[i]!=st2[z])
       return 0;
+    z++;
   }
   return 1;
 }
@@ -142,12 +111,6 @@ void conc(char* st1, char* st2, char* new_str){
   //printf("%s\n", new_str);
 }
 
-void convertToUpperCase(char *sPtr)
-{
-      for (int i=0; i< strlen(sPtr); i++)
-        sPtr[i] = toupper(sPtr[i]);
-
-}
 
 
 /* The purpose of cpmdir is to read all of the directory entries and print them in the alphabetical order */
@@ -205,56 +168,7 @@ int main(int argc, char* argv[]) {
 
   nodePtr p = loadDirectory(dname, opt_disk);
   nodePtr current = p;
-  filePtr pf = NULL;
-  char* files[5000];
-  int length = 0;
-  int actual_num_files=0;
-  for(int i=0; i<num_files; i++){
-    if(wildcard(argc[i+3])==0){
-      pf = insert(argc[i+3], pf);
-      actual_num_files++;
-    }
-    else if(wildcard(argc[i+3])==1){
-      while(current != NULL){
-        strcpy(copy_name, current->ptr->name);
-        copy_name[8] = '\0';
-        strcpy(copy_extension, current->ptr->extension);
-        copy_extension[3] = '\0';
-        conc(copy_name, copy_extension, current_file_name);
-        int dot = find_loc(argc[i+3], '.');
-        if(pre(current_file_name,argc[i+3], dot+1){
-          pf = insert(argc[i+3], pf);
-          actual_num_files++;
-        }
-        current=current->next;
-      }
-    }
-    else if(wildcard(argc[i+3])==2){
-      while(current != NULL){
-        strcpy(copy_name, current->ptr->name);
-        copy_name[8] = '\0';
-        strcpy(copy_extension, current->ptr->extension);
-        copy_extension[3] = '\0';
-        conc(copy_name, copy_extension, current_file_name);
-        int dot = find_loc(argc[i+3], '.');
-        if(post(current_file_name,argc[i+3], dot+1){
-          pf = insert(argc[i+3], pf);
-          actual_num_files++;
-        }
-        current=current->next;
-      }
-    }
-    else{
-      while(current != NULL){
-        pf = insert(argc[i+3], pf);
-        current = current->next;
-        actual_num_files++;
-      }
-    }
-    current = p;
-  }
 
-  filePtr cur = pf;
   FILE* fpw;
   char* file_name;
   int file_loc = 3;
@@ -263,16 +177,14 @@ int main(int argc, char* argv[]) {
   char current_file_name[12];
   int block_loc[num_128_per_block];
   char content[128];
-  while(actual_num_files){
+  while(num_files){
     file_name = argv[file_loc];
-    if((fpw = fopen(file_name, "wb")) == NULL ) {
-      printf("Output file not open\n");
-      return -1;
-    }
-
-    printf(" before %s\n", file_name);
-    convertToUpperCase(file_name);
-    printf(" after %s\n", file_name);
+    if(wildcards(file_name)==0){
+      if((fpw = fopen(file_name, "wb")) == NULL ) {
+        printf("Output file not open\n");
+        return -1;
+      }
+      convertToUpperCase(file_name);
     while(current!=NULL){
       strcpy(copy_name, current->ptr->name);
       copy_name[8] = '\0';
@@ -281,7 +193,6 @@ int main(int argc, char* argv[]) {
       //printf("%s\n", copy_extension);
       conc(copy_name, copy_extension, current_file_name);
       //printf("%s\n", current_file_name);
-      if(wildcard(file_name)==0){
       if(!strcmp(current_file_name, file_name)){
         int num128 = current->ptr->rc;
         for(int j=0; j<num_alloc_per_ent; j++){
@@ -293,8 +204,6 @@ int main(int argc, char* argv[]) {
               find_loc(current->ptr->blocks.floppy_block[j], num_128_per_block, block_loc);
             }
             else{
-              char ary[4];
-              printf("%d\n",hextodec(ary) );
               find_loc_h(current->ptr->blocks.hard_block[j], num_128_per_block, block_loc);
             }
             printf("alloc  %d\n", block_loc[0]);
@@ -320,7 +229,195 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-  fclose(fpw);
+  else if(wildcards(file_name)==1){
+
+    printf("working\n");
+    char openning[13]="";
+    int isOpen = 0;
+    while(current!=NULL){
+      strcpy(copy_name, current->ptr->name);
+      copy_name[8] = '\0';
+      strcpy(copy_extension, current->ptr->extension);
+      copy_extension[3] = '\0';
+      //printf("%s\n", copy_extension);
+      conc(copy_name, copy_extension, current_file_name);
+      //printf("%s\n", current_file_name);
+      int dot = find(current_file_name, '.');
+      printf("%s\n",current_file_name);
+      printf("%d\n", dot);
+      if(post(current_file_name, file_name, dot)  == 1){
+        printf("000000000000000000000000\n");
+        printf("%d\n", strcmp(openning,current_file_name));
+        if(strcmp(openning,current_file_name)){
+        if(isOpen){
+          fclose(fpw);
+        }
+
+        convertToLowerCase(current_file_name);
+        if((fpw = fopen(current_file_name, "wb")) == NULL ) {
+          printf("Output file not open\n");
+          return -1;
+        }
+        isOpen = 1;
+        strcpy(openning, current_file_name);
+      }
+        int num128 = current->ptr->rc;
+        for(int j=0; j<num_alloc_per_ent; j++){
+          if(num128 >= num_128_per_block) //num_128_per_block == num 128 per blok
+          {
+            num128-= num_128_per_block;
+            //printf("%d\n",current->ptr->blocks.floppy_block[j] );
+            if(opt_disk == 'F'){
+              find_loc(current->ptr->blocks.floppy_block[j], num_128_per_block, block_loc);
+            }
+            else{
+              find_loc_h(current->ptr->blocks.hard_block[j], num_128_per_block, block_loc);
+            }
+            printf("alloc  %d\n", block_loc[0]);
+            for(int k=0; k<num_128_per_block; k++){
+              if(block_loc[k]==0){
+                break;
+              }
+              fseek(fpr, block_loc[k], SEEK_SET);
+              fread(&content, 128, 1, fpr);
+              printf("%s\n", content);
+              fwrite(&content, 128, 1, fpw);
+            }
+          }
+          else if(num128==0){
+            break;
+          }
+          else{
+            find_loc(current->ptr->blocks.floppy_block[j], num128, block_loc);
+            break;
+        }
+      }
+      }
+      current = current->next;
+      if(current==NULL && strlen(openning)!=0)
+        fclose(fpw);
+    }
+  }
+  else if(wildcards(file_name)==2){
+    char openning[13]="";
+    int isOpen = 0;
+    while(current!=NULL){
+      strcpy(copy_name, current->ptr->name);
+      copy_name[8] = '\0';
+      strcpy(copy_extension, current->ptr->extension);
+      copy_extension[3] = '\0';
+      //printf("%s\n", copy_extension);
+      conc(copy_name, copy_extension, current_file_name);
+      //printf("%s\n", current_file_name);
+      int dot = find(current_file_name, '.');
+      if(pre(current_file_name, file_name, dot+1)  == 1){
+        if(strcmp(openning,current_file_name)){
+        if(isOpen)
+          fclose(fpw);
+        convertToLowerCase(current_file_name);
+        if((fpw = fopen(current_file_name, "wb")) == NULL ) {
+          printf("Output file not open\n");
+          return -1;
+        }
+        isOpen=1;
+        strcpy(openning, current_file_name);
+      }
+        int num128 = current->ptr->rc;
+        for(int j=0; j<num_alloc_per_ent; j++){
+          if(num128 >= num_128_per_block) //num_128_per_block == num 128 per blok
+          {
+            num128-= num_128_per_block;
+            //printf("%d\n",current->ptr->blocks.floppy_block[j] );
+            if(opt_disk == 'F'){
+              find_loc(current->ptr->blocks.floppy_block[j], num_128_per_block, block_loc);
+            }
+            else{
+              find_loc_h(current->ptr->blocks.hard_block[j], num_128_per_block, block_loc);
+            }
+            printf("alloc  %d\n", block_loc[0]);
+            for(int k=0; k<num_128_per_block; k++){
+              if(block_loc[k]==0){
+                break;
+              }
+              fseek(fpr, block_loc[k], SEEK_SET);
+              fread(&content, 128, 1, fpr);
+              printf("%s\n", content);
+              fwrite(&content, 128, 1, fpw);
+            }
+          }
+          else if(num128==0){
+            break;
+          }
+          else{
+            find_loc(current->ptr->blocks.floppy_block[j], num128, block_loc);
+            break;
+        }
+      }
+      current = current->next;
+      if(current==NULL && strlen(openning)!=0)
+        fclose(fpw);
+      }
+    }
+  }
+  else{
+    printf("oooooooooo\n");
+    while(current!=NULL){
+      char openning[13]="";
+      int isOpen = 0;
+      strcpy(copy_name, current->ptr->name);
+      copy_name[8] = '\0';
+      strcpy(copy_extension, current->ptr->extension);
+      copy_extension[3] = '\0';
+      //printf("%s\n", copy_extension);
+      conc(copy_name, copy_extension, current_file_name);
+      //printf("%s\n", current_file_name);
+      if(strcmp(openning,current_file_name)){
+      if(isOpen)
+        fclose(fpw);
+      convertToLowerCase(current_file_name);
+      if((fpw = fopen(current_file_name, "wb")) == NULL ) {
+        printf("Output file not open\n");
+        return -1;
+      }
+      isOpen = 1;
+      strcpy(openning, current_file_name);
+    }
+        int num128 = current->ptr->rc;
+        for(int j=0; j<num_alloc_per_ent; j++){
+          if(num128 >= num_128_per_block) //num_128_per_block == num 128 per blok
+          {
+            num128-= num_128_per_block;
+            //printf("%d\n",current->ptr->blocks.floppy_block[j] );
+            if(opt_disk == 'F'){
+              find_loc(current->ptr->blocks.floppy_block[j], num_128_per_block, block_loc);
+            }
+            else{
+              find_loc_h(current->ptr->blocks.hard_block[j], num_128_per_block, block_loc);
+            }
+            printf("alloc  %d\n", block_loc[0]);
+            for(int k=0; k<num_128_per_block; k++){
+              if(block_loc[k]==0){
+                break;
+              }
+              fseek(fpr, block_loc[k], SEEK_SET);
+              fread(&content, 128, 1, fpr);
+              printf("%s\n", content);
+              fwrite(&content, 128, 1, fpw);
+            }
+          }
+          else if(num128==0){
+            break;
+          }
+          else{
+            find_loc(current->ptr->blocks.floppy_block[j], num128, block_loc);
+            break;
+        }
+      }
+      current = current->next;
+      if(current==NULL && strlen(openning)!=0)
+        fclose(fpw);
+    }
+  }
   num_files--;
 }
 return 0;
