@@ -25,5 +25,6 @@ void normal_print(nodePtr p){
       }
     current = current->next;
   }
+  printf("\n");
 
 }

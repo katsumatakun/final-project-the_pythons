@@ -64,5 +64,5 @@ void formal_print(nodePtr p, char disk_type){
   }
   printf("\n");
   printf(" Total Bytes = %8dK  Total Records = %8d Files Found = %5d\n", total_bytes, total_recs, count);
-  printf(" Total 1K Block = %8d Used/Max Dir Entries for this floppy disk = %4d/  %d\n", total_bytes, entries_occupied, max_entry);
+  printf(" Total %dK Block = %8d Used/Max Dir Entries for this disk = %4d/  %d\n",one_block/1000, total_bytes, entries_occupied, max_entry);
 }

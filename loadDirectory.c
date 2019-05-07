@@ -20,7 +20,7 @@ nodePtr loadDirectory(char* filePath, char opt){
       break;
     case 'H':
       bootTracks = 0;
-      numEntries = 1024;
+      numEntries = 256;
       skew = 1;
       border = 32768; //maybe 16384
       break;
@@ -44,7 +44,6 @@ nodePtr loadDirectory(char* filePath, char opt){
   int entry_size = sizeof(struct directory_entry);
 
   for(int i=0; i<numEntries/4; i++ ){
-
     for(int x=0; x<4; x++){
       fread(q, entry_size, 1, fpr);
       if(q->status == 229)
