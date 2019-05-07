@@ -13,9 +13,28 @@ int main(int argc, char* argv[]) {
     return -1;
   }
 
-  if(!contain(".dsk", argv[2])){
-    printf("The extension of the file must be .dsk\n");
-    return -1;
+  for(int d=0;d<strlen(argv[2])-3;d++){
+    if(argv[2][d] == 46){
+      if(argv[2][d+1] == 68 || argv[2][d+1] == 100){
+        if(argv[2][d+2] == 83 || argv[2][d+2] == 115){
+          if(argv[2][d+3] == 75 || argv[2][d+3] == 107){
+            break;
+          }
+          else{
+            printf("The extension of the file must be .dsk\n");
+            return -1;
+          }
+        }
+        else{
+          printf("The extension of the file must be .dsk\n");
+          return -1;
+        }
+      }
+      else{
+        printf("The extension of the file must be .dsk\n");
+        return -1;
+      }
+    }
   }
 
   FILE *fpw;

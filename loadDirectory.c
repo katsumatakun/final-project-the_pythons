@@ -47,7 +47,7 @@ nodePtr loadDirectory(char* filePath, char opt){
 
     for(int x=0; x<4; x++){
       fread(q, entry_size, 1, fpr);
-      if(q->status == 229)
+      if(q->status == 229|| q->status == 255)
         continue;
       head_ptr = insertData(head_ptr, q);
       if(head_ptr == NULL){

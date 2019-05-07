@@ -9,13 +9,13 @@
 int main(int argc, char* argv[]){
 
     if(argc < 4){
-      printf("usage: program name, disk format, File to be deleted, disk name \n");
+      printf("usage: program name, disk format, disk name, file to be deleted \n");
       return -1;
     }
 
     FILE *fptr;
     if((fptr = fopen(argv[2],"rb+"))==NULL){   //rb+ Allows to read and write but if there is no file it will equal null
-      printf("File cannot be opened");
+      printf("File cannot be opened \n");
       return -1;
     }
     char opt;
@@ -70,7 +70,6 @@ int main(int argc, char* argv[]){
         return -1;
       }
 
-
       char *finames[256];                       //holds the the filename to be deleted
       nodePtr p = loadDirectory(argv[2],opt);
       int con = 0;                            //count for number of files to be deleted
@@ -98,7 +97,8 @@ int main(int argc, char* argv[]){
       int run_count=0;
       char write[0];
       write[0]=229;
-      int a = 0;                                          //counter used to parse through the .dsk filename
+      int a = 0;
+      int run = 0;                                         //counter used to parse through the .dsk filename
 
 
       while(fread(q,entry_size,1,fptr)){                            //reads the file one line at a time
@@ -121,6 +121,7 @@ int main(int argc, char* argv[]){
                   fseek(fptr,-entry_size,SEEK_CUR);             //sets seek to begining of line to prime for write
                   fwrite(write,1,1,fptr);
                   fseek(fptr,-1,SEEK_CUR);                    //sets the seek -1 to compensate for replaced 00
+                  run++;
                 }
               }
             }
@@ -141,10 +142,14 @@ int main(int argc, char* argv[]){
                   fseek(fptr,-entry_size,SEEK_CUR);
                   fwrite(write,1,1,fptr);
                   fseek(fptr,-1,SEEK_CUR);
+                  run++;
                 }
               }
             }
           }
         }
       fclose(fptr);
+      if(run==0){
+        printf("file was not found within file\n");
+      }
     }

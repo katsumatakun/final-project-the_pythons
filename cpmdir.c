@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
   char opt;
   char opt_disk=' ';
   int opt_format=0;
-  while((opt = getopt(argc, argv, "sFH-:")) != -1){
+  while((opt = getopt(argc, argv, "lFH-:")) != -1){
     switch(opt){
     case 'F':
       opt_disk = 'F';
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     case 'H':
       opt_disk = 'H';
       break;
-    case 's':
+    case 'l':
       opt_format = 1;
       break;
     default:
@@ -55,12 +55,6 @@ int main(int argc, char* argv[]) {
   else{
     formal_print(p, opt_format);
   }
-  /*while(p!=NULL){
-    //229==e5
-    if(p->ptr->status != 229 && p->ptr->xl == 0) //if the entry isn't empty
-      printf("%s \n", p->ptr->name);
-    p = p->next;
-  }*/
 
   return 0;
 }
