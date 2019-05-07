@@ -8,6 +8,8 @@
 #include "dir_ent.h"
 #include "loadDirectory.h"
 
+/*To add two strings together*/
+
 void conc(char* st1, char* st2, char* new_str){
   int size1 = strlen(st1);
   int size2 = strlen(st2);
@@ -38,6 +40,7 @@ void conc(char* st1, char* st2, char* new_str){
   //printf("%s\n", new_str);
 }
 
+/*To convert to uppercase string*/
 void convertToUpperCase(char *sPtr)
 {
   for (int i=0; i< strlen(sPtr); i++)
@@ -45,12 +48,13 @@ void convertToUpperCase(char *sPtr)
 
 }
 
+/*To convert to lowercase string*/
 void convertToLowerCase(char* st){
   for(int i = 0; i < strlen(st); i++){
   st[i] = tolower(st[i]);
 }
 }
-
+/*check if there is the same named file name */
 int isMember(nodePtr p, char* filename){
   nodePtr q = p;
   char copy_name[9];
@@ -95,6 +99,7 @@ int wildcards(char* fname){
 
 }
 
+/* used to find a location of dot */
 int find(char* st, char c){
   for(int i=0; i<strlen(st); i++){
     if(st[i] == c){
@@ -104,6 +109,7 @@ int find(char* st, char c){
   return -1;
 }
 
+/*check is first <num> letters are the same*/
 int pre(char* st1, char* st2, int num){
   convertToUpperCase(st1);
   convertToUpperCase(st2);
@@ -116,6 +122,7 @@ int pre(char* st1, char* st2, int num){
   return 1;
 }
 
+/*check if last <num> letters are the same */
 int post(char* st1, char* st2, int num){
   int z = 1;
   convertToUpperCase(st1);
@@ -132,11 +139,7 @@ int post(char* st1, char* st2, int num){
 }
 
 
-
-
-
-/* The purpose of cpmdir is to read all of the directory entries and print them in the alphabetical order */
-
+/*This function will copy files input from a disk and put them into the current directory of your PC*/
 int main(int argc, char* argv[]) {
 
   if (argc<4) {
