@@ -148,7 +148,7 @@ int copy_from_disks(int argc, char* argv[]) {
   }
 
   int num_files = argc-4;
-  char* dname = argv[2];
+  char* dname = argv[3];
 
   if(!contain(".dsk", dname) ){
     printf("The extension of the file must be .dsk\n");
